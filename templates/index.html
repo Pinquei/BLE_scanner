@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLE Beacon Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>BLE Beacon Monitor</h1>
+    
+    <!-- 圖表容器 -->
+    <div class="chart-container">
+        <canvas id="beaconChart"></canvas>
+    </div>
+    
+    <!-- 表格容器 -->
+    <div class="table-container">
+        <table border=1>
+            <thead>
+                <tr>
+                    <th>Raspberry Pi ID</th>
+                    <th>MAC Address</th>
+                    <th>Location</th>
+                    <th>Appearance Time</th>
+                    <th>Disappearance Time</th>
+                </tr>
+            </thead>
+            <tbody id="beaconTableBody">
+                <!-- 表格內容將由JavaScript動態生成 -->
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        // 初始化圖表
+        var ctx = document.getElementById('beaconChart').getContext('2d');
+        var raspberryIds = [1, 2, 3]; // 替換成您的Raspberry Pi ID列表
+
+        var beaconChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: raspberryIds,
+                datasets: [{
+                    label: 'Beacon Counts',
+                    data: new Array(raspberryIds.length).fill(0), // 初始化為0
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 更新圖表數據
+        function updateCharts() {
+            beaconChart.data.datasets[0].data = new Array(raspberryIds.length).fill(0);
+
+            raspberryIds.forEach((raspberryId, index) => {
+                fetch('/data/' + raspberryId)
+                    .then(response => response.json())
+                    .then(data => {
+                        var count = Object.keys(data).length;
+                        // 更新圖表數據
+                        beaconChart.data.datasets[0].data[index] = count;
+                        beaconChart.update();
+                    });
+            });
+        }
+
+        // 開始更新圖表
+        function startUpdatingCharts() {
+            updateCharts(); // 初始更新
+            setInterval(updateCharts, 5000); // 每5秒更新一次
+        }
+
+        // 更新表格數據
+        function updateTable() {
+            raspberryIds.forEach((raspberryId, index) => {
+                fetch('/database')
+                    .then(response => {
+                        return response.json()
+                        })
+                    .then(data => {
+                        
+                        var tbody = document.getElementById('beaconTableBody');
+                        tbody.innerHTML = ''; // 清空表格內容
+
+                        for (var i = 0 ; i < data.length ;i++) {
+                            var row = document.createElement('tr');
+                            row.innerHTML = '<td>' + data[i][0] + '</td>' +
+                                '<td>' + data[i][1] + '</td>' +
+                                '<td>' + data[i][2] + '</td>' +
+                                '<td>' + data[i][3] + '</td>' +
+                                '<td>' + data[i][4] + '</td>';
+                            tbody.appendChild(row);
+                        }
+                    });
+            });
+        }
+
+        // 開始更新表格
+        function startUpdatingTable() {
+            updateTable(); // 初始更新
+            setInterval(updateTable, 5000); // 每5秒更新一次
+        }
+
+        // 開始更新圖表和表格
+        startUpdatingCharts();
+        startUpdatingTable();
+    </script>
+</body>
+</html>
