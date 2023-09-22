@@ -1,29 +1,28 @@
-# BLE iBeacon Scanner - iBeacon and Eddystone Beacons
+# BLE iBeacon 掃描器 - iBeacon 和 Eddystone 信標
 
-A simple project that scans for iBeacon and Eddystone BLE beacons using your Raspberry Pi and Python.
+一個使用 Raspberry Pi 和 Python 掃描 iBeacon 和 Eddystone BLE 信標的簡單專案。
 
 ## iBeacon
-UUID, Major, Minor, Mac Address and RSSI
+UUID、Major、Minor、Mac 地址和 RSSI
 
 ## Eddystone
-UID - Finds: Namespace ID and Instance ID.
+UID - 查找：命名空間 ID 和實例 ID。
 
-URL - Finds: URL and URL Prefix.
+URL - 查找：URL 和 URL 前綴。
 
-EID - Finds (Details comming soon).
+EID - 查找（詳細信息即將推出）。
 
-TLM - Finds (Details comming soon).
+TLM - 查找（詳細信息即將推出）。
 
 
-Let me know if there are any issues.
 
-Here is a demo:
+這是一個演示：
 
 ![](BLEBeaconDemo.gif)
 
 ## Getting Started
 
-You will need to download ```bluez``` to get bluetooth data.
+您需要下載 bluez 以獲取藍牙數據。
 
 ```
 sudo apt-get update
@@ -33,8 +32,7 @@ sudo apt-get install python-pip python-dev ipython
 sudo apt-get install bluetooth libbluetooth-dev
 sudo pip install pybluez
 ```
-
-Additionally to detect BLE devices you need to enable the experimental features. To do this:
+另外，為了檢測 BLE 設備，您需要啟用實驗性功能。請按照以下步驟操作：
 
 1. Go to directory
 
